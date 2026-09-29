@@ -1,0 +1,77 @@
+{
+  "title": "Stammgast",
+  "missing": "Missing on this system: {tools}",
+  "mode": {
+    "auto": "Stammgast",
+    "always": "Stammgast: always",
+    "off": "Stammgast: off"
+  },
+  "settings": {
+    "apps": {
+      "label": "AI agents",
+      "description": "Program names, separated by commas. While one of them runs, closing the lid does not suspend the laptop. A script run by node, bun or python counts by its own name or its npm package"
+    },
+    "ignore": {
+      "label": "Ignore command lines containing",
+      "description": "Parts of a command line, separated by commas, that make a process a helper rather than an agent at work. Claude Code's browser bridge runs for as long as Chrome does"
+    },
+    "battery_floor": {
+      "label": "Battery floor",
+      "description": "Percent at which Stammgast lets go on battery, so the laptop suspends as usual. It holds again 5 points higher or on mains power. It always lets go at 5 %, whatever this says"
+    },
+    "lock_on_close": {
+      "label": "Lock when the lid closes",
+      "description": "Locks the screen when the lid closes while Stammgast holds it open, as a suspend would have"
+    },
+    "screen_off_on_close": {
+      "label": "Screen off when the lid closes",
+      "description": "Turns the screens off when the lid closes while Stammgast holds it open; opening the lid turns them back on"
+    },
+    "show_projects": {
+      "label": "Show projects",
+      "description": "Show each agent's project, session name, model and cost. Turn off for a copy on the lock screen"
+    },
+    "show_limits": {
+      "label": "Show usage limits",
+      "description": "Show the usage limits Claude Code and Codex report. Claude's need the status line set up (see the README)"
+    }
+  },
+  "state": {
+    "busy": "Active",
+    "waiting": "Waiting for you",
+    "idle": "Idle"
+  },
+  "time": {
+    "now": "just now",
+    "minutes": "{n} min",
+    "hours": "{n} h",
+    "hours_minutes": "{h} h {m} min",
+    "days": "{n} d"
+  },
+  "detail": {
+    "context": "context {n} %"
+  },
+  "bar": {
+    "none": "No AI agent running",
+    "lid": "Lid",
+    "lid_held": "held open",
+    "lid_free": "sleeps when closed",
+    "mode": "Mode",
+    "battery": "Battery",
+    "battery_low": "low, letting go"
+  },
+  "desktop": {
+    "none": "No AI agent running",
+    "lid_held": "Lid held",
+    "lid_free": "Sleeps when closed",
+    "battery_low": "Battery low",
+    "more": "and {n} more"
+  },
+  "limits": {
+    "title": "{agent} usage",
+    "session": "Session",
+    "week": "Week",
+    "resets": "resets in {t}",
+    "reset": "reset since"
+  }
+}

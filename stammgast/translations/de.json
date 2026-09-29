@@ -1,0 +1,77 @@
+{
+  "title": "Stammgast",
+  "missing": "Fehlt auf diesem System: {tools}",
+  "mode": {
+    "auto": "Stammgast",
+    "always": "Stammgast: immer",
+    "off": "Stammgast: aus"
+  },
+  "settings": {
+    "apps": {
+      "label": "KI-Agenten",
+      "description": "Programmnamen, durch Kommas getrennt. Solange einer davon läuft, legt das Zuklappen den Laptop nicht schlafen. Ein Skript, das node, bun oder python ausführt, zählt mit seinem eigenen Namen oder seinem npm-Paket"
+    },
+    "ignore": {
+      "label": "Befehlszeilen ignorieren, die enthalten",
+      "description": "Teile einer Befehlszeile, durch Kommas getrennt, die einen Prozess zum Helfer statt zu einem arbeitenden Agenten machen. Die Browser-Brücke von Claude Code läuft, solange Chrome läuft"
+    },
+    "battery_floor": {
+      "label": "Akku-Untergrenze",
+      "description": "Prozent, bei denen Stammgast im Akkubetrieb loslässt, damit der Laptop wie gewohnt schlafen geht. Ab 5 Punkten mehr oder am Netz hält er wieder. Bei 5 % lässt er immer los, was hier auch steht"
+    },
+    "lock_on_close": {
+      "label": "Beim Zuklappen sperren",
+      "description": "Sperrt den Bildschirm, wenn der Deckel zugeht, während Stammgast ihn offen hält, wie es ein Ruhezustand getan hätte"
+    },
+    "screen_off_on_close": {
+      "label": "Beim Zuklappen Bildschirm aus",
+      "description": "Schaltet die Bildschirme aus, wenn der Deckel zugeht, während Stammgast ihn offen hält; beim Aufklappen gehen sie wieder an"
+    },
+    "show_projects": {
+      "label": "Projekte zeigen",
+      "description": "Projekt, Sitzungsname, Modell und Kosten jedes Agenten zeigen. Für eine Kopie auf dem Sperrbildschirm ausschalten"
+    },
+    "show_limits": {
+      "label": "Nutzungsgrenzen zeigen",
+      "description": "Die Nutzungsgrenzen zeigen, die Claude Code und Codex melden. Die von Claude brauchen die eingerichtete Statuszeile (siehe README)"
+    }
+  },
+  "state": {
+    "busy": "Aktiv",
+    "waiting": "Wartet auf dich",
+    "idle": "Untätig"
+  },
+  "time": {
+    "now": "gerade eben",
+    "minutes": "{n} min",
+    "hours": "{n} h",
+    "hours_minutes": "{h} h {m} min",
+    "days": "{n} T"
+  },
+  "detail": {
+    "context": "Kontext {n} %"
+  },
+  "bar": {
+    "none": "Kein KI-Agent läuft",
+    "lid": "Deckel",
+    "lid_held": "offen gehalten",
+    "lid_free": "schläft beim Zuklappen",
+    "mode": "Modus",
+    "battery": "Akku",
+    "battery_low": "niedrig, lässt los"
+  },
+  "desktop": {
+    "none": "Kein KI-Agent läuft",
+    "lid_held": "Deckel gehalten",
+    "lid_free": "Schläft beim Zuklappen",
+    "battery_low": "Akku niedrig",
+    "more": "und {n} weitere"
+  },
+  "limits": {
+    "title": "Nutzung {agent}",
+    "session": "Sitzung",
+    "week": "Woche",
+    "resets": "zurückgesetzt in {t}",
+    "reset": "seither zurückgesetzt"
+  }
+}

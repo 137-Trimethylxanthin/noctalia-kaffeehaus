@@ -1,0 +1,89 @@
+# Stammgast — the regular who stays after closing time: the lid shuts, the
+# laptop keeps working, for as long as an AI agent is at it.
+#
+#   watch     [[service]]   holds logind's lid switch (systemd-inhibit) while an
+#                           agent runs; with the lid closed also sleep and idle,
+#                           and locks and darkens the screen (lib/stay.luau)
+#   toggle    [[shortcut]]  control-center tile: auto -> always -> off
+#   bar       [[widget]]    bar icon: the agent that matters most and its state
+#   desktop   [[desktop_widget]]  card for the desktop or lock screen: agents,
+#                           what they do, usage limits (lib/agents, lib/look)
+
+id           = "137-trimethylxanthin/stammgast"
+name         = "Stammgast"
+version      = "0.1.0"
+plugin_api   = 24   # argv form of runAsync; also brings module-require and service-lifecycle
+author       = "137-trimethylxanthin"
+license      = "MIT"
+icon         = "coffee"
+deprecated   = false
+description  = "Close the lid and keep coding: while Claude Code, Codex or another AI agent runs, the laptop stays awake with the lid shut, screen locked and off. A bar icon and a desktop or lock-screen card show what each agent is doing, with usage limits."
+tags         = ["shortcut", "service", "widget", "desktop", "power", "ai"]
+dependencies = ["systemd-inhibit", "busctl", "ps", "awk", "pkill", "noctalia"]
+
+[[setting]]
+key             = "apps"
+type            = "string"
+label_key       = "settings.apps.label"
+description_key = "settings.apps.description"
+default         = "claude, codex, gemini, opencode, aider, crush, goose, cursor-agent, qwen, amp, copilot"
+
+[[setting]]
+key             = "ignore"
+type            = "string"
+label_key       = "settings.ignore.label"
+description_key = "settings.ignore.description"
+default         = "--chrome-native-host"
+
+[[setting]]
+key             = "battery_floor"
+type            = "int"
+label_key       = "settings.battery_floor.label"
+description_key = "settings.battery_floor.description"
+default         = 15
+min             = 0
+max             = 90
+
+[[setting]]
+key             = "lock_on_close"
+type            = "bool"
+label_key       = "settings.lock_on_close.label"
+description_key = "settings.lock_on_close.description"
+default         = true
+
+[[setting]]
+key             = "screen_off_on_close"
+type            = "bool"
+label_key       = "settings.screen_off_on_close.label"
+description_key = "settings.screen_off_on_close.description"
+default         = true
+
+[[service]]
+id    = "watch"
+entry = "watch.luau"
+
+[[shortcut]]
+id    = "toggle"
+entry = "shortcut.luau"
+
+[[widget]]
+id    = "bar"
+entry = "bar.luau"
+
+[[desktop_widget]]
+id    = "desktop"
+entry = "desktop.luau"
+
+  [[desktop_widget.setting]]
+  key             = "show_projects"
+  type            = "bool"
+  label_key       = "settings.show_projects.label"
+  description_key = "settings.show_projects.description"
+  default         = true
+
+  [[desktop_widget.setting]]
+  key             = "show_limits"
+  type            = "bool"
+  label_key       = "settings.show_limits.label"
+  description_key = "settings.show_limits.description"
+  default         = true
