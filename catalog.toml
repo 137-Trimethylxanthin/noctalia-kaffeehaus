@@ -79,3 +79,17 @@ description = "A Win+P display switcher: extend, duplicate, external only and la
 deprecated = false
 plugin_api = 24
 tags = ["launcher", "shortcut", "service", "hardware", "display"]
+
+[[plugin]]
+id = "137-trimethylxanthin/stammgast"
+name = "Stammgast"
+version = "0.1.0"
+updated_at = 1790690358
+added_at = 1790690358
+author = "137-trimethylxanthin"
+license = "MIT"
+icon = "coffee"
+description = "Close the lid and keep coding: while Claude Code, Codex or another AI agent runs, the laptop stays awake with the lid shut, screen locked and off. A bar icon and a desktop or lock-screen card show what each agent is doing, with usage limits."
+deprecated = false
+plugin_api = 24
+tags = ["shortcut", "service", "widget", "desktop", "power", "ai"]

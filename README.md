@@ -6,13 +6,15 @@ any other, updates included: a Win+P **display switcher**, a
 **calendar** with month and day widgets, **picture-in-picture** for any
 window or stream, a **Do Not Disturb** that actually keeps Discord quiet, and a
 **cursor light** that flashes on your cursor when a message comes in, dims
-everything else while you shake the mouse, or glows for as long as you like.
+everything else while you shake the mouse, or glows for as long as you like, and
+a **lid keeper** that lets your AI agent go on coding with the laptop shut, and
+shows in the bar what it is doing.
 
 | [Vitrine](vitrine/README.md) | [Fiaker](fiaker/README.md) | [Häubchen](haeubchen/README.md) |
 | --- | --- | --- |
 | [![Vitrine: the four display layouts, extend active](vitrine/thumbnail.webp)](vitrine/README.md) | [![Fiaker: month grid and day timeline](fiaker/thumbnail.webp)](fiaker/README.md) | [![Häubchen: a stream in a picture-in-picture corner player](haeubchen/thumbnail.webp)](haeubchen/README.md) |
-| [**Goschen**](goschen/README.md) | [**Kerzenlicht**](kerzenlicht/README.md) | |
-| [![Goschen: Do Not Disturb mutes a chat ping while a call and music keep playing](goschen/thumbnail.webp)](goschen/README.md) | [![Kerzenlicht: a soft white glow around the mouse cursor](kerzenlicht/thumbnail.webp)](kerzenlicht/README.md) | |
+| [**Goschen**](goschen/README.md) | [**Kerzenlicht**](kerzenlicht/README.md) | [**Stammgast**](stammgast/README.md) |
+| [![Goschen: Do Not Disturb mutes a chat ping while a call and music keep playing](goschen/thumbnail.webp)](goschen/README.md) | [![Kerzenlicht: a soft white glow around the mouse cursor](kerzenlicht/thumbnail.webp)](kerzenlicht/README.md) | [![Stammgast: with the lid closed, Claude Code keeps coding while the screen is locked and off](stammgast/thumbnail.webp)](stammgast/README.md) |
 
 | Plugin | | What it does |
 | --- | --- | --- |
@@ -21,6 +23,7 @@ everything else while you shake the mouse, or glows for as long as you like.
 | **[Häubchen](haeubchen/README.md)** | `0.2.1` | Picture-in-picture for any window or stream: pick it with `/pip` or one key, or let it spot streams itself, and it follows you into a corner whenever you leave its workspace. Hyprland, sway, Scroll, niri and MangoWC. |
 | **[Goschen](goschen/README.md)** | `0.1.1` | Do Not Disturb that really means it: while it is on, the pings Discord, Telegram and friends play themselves are muted too, and the call you are in and your music keep playing. PipeWire. |
 | **[Kerzenlicht](kerzenlicht/README.md)** | `0.2.0` | Find your cursor: a message or a key lights it for a moment, shaking the mouse dims everything else, and a soft white glow can follow it for screen shares and talks. Click-through, every monitor. Any compositor with cursor sessions. |
+| **[Stammgast](stammgast/README.md)** | `0.1.0` | Close the lid and keep coding: while Claude Code, Codex or another AI agent runs, closing the lid does not suspend the laptop; it locks and turns off the screen instead, and lets go when you quit the agent or the battery runs low. A bar icon (with Claude's mascot) and a desktop or lock-screen card show what each agent is doing, with usage limits. systemd-logind. |
 
 ## Install
 
@@ -38,6 +41,7 @@ noctalia msg plugins enable 137-trimethylxanthin/fiaker
 noctalia msg plugins enable 137-trimethylxanthin/haeubchen
 noctalia msg plugins enable 137-trimethylxanthin/goschen
 noctalia msg plugins enable 137-trimethylxanthin/kerzenlicht
+noctalia msg plugins enable 137-trimethylxanthin/stammgast
 ```
 
 `source add` clones the repo into Noctalia's plugin cache; `enable` exports a
@@ -66,6 +70,7 @@ each compositor lets a plugin do its job:
 | **Häubchen** | ✅ | ☑️ | ☑️ | ☑️ | ☑️ | ❌² | ❌² | ❌² | ❌² |
 | **Goschen** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | **Kerzenlicht** | ✅ | ☑️³ | ☑️⁴ | ☑️⁴ | ☑️⁴ | ☑️⁴ | ☑️⁴ | ☑️⁴ | ☑️⁴ |
+| **Stammgast** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 
 ✅ works (tested on Hyprland 0.56, or needs nothing from the compositor) ·
 ☑️ written against that compositor's IPC or protocol, not tested there yet ·
@@ -86,8 +91,9 @@ a live Noctalia session.
    a software cursor (`WLR_NO_HARDWARE_CURSORS=1`, nested sessions, some NVIDIA
    setups, a recording that paints the cursor in) the light goes out there.
 
-Fiaker uses nothing but Noctalia's own widgets, and Goschen talks to PipeWire,
-not to the compositor, which is why they work everywhere.
+Fiaker uses nothing but Noctalia's own widgets, Goschen talks to PipeWire and
+Stammgast to systemd-logind, not to the compositor, which is why they work
+everywhere.
 
 ## Before you rely on them
 
@@ -111,6 +117,12 @@ in a call keeps its pings along with the call.
 **Kerzenlicht** needs `uv` (it fetches pywayland on first use), `pkill` and
 `pgrep`, and a compositor with `ext-image-copy-capture-v1` cursor sessions;
 `busctl` (systemd) for flashing on messages.
+
+**Stammgast** needs systemd-logind handling the lid (the default almost
+everywhere), `systemd-inhibit`, `busctl`, `ps`, `awk` and `pkill`. An agent
+counts while it is open, busy or not, so quit it when you want the laptop to
+sleep; a battery floor is the safety net. A closed laptop that keeps working
+gets warm.
 
 Each plugin's own README has the full documentation — every widget, setting and
 caveat.
@@ -145,8 +157,10 @@ uv run .github/workflows/update-catalog.py
 
 ## Developing
 
-Point Noctalia at your checkout instead of at GitHub — a `path` source is scanned
-directly, with no catalog involved, and `.luau` edits hot-reload:
+Point Noctalia at your checkout instead of at GitHub — a `path` source is read
+from disk, and `.luau` edits hot-reload. It still lists only the plugins in
+`catalog.toml`, so after adding a plugin directory, regenerate it (see above)
+and run `noctalia msg plugins update dev`:
 
 ```sh
 noctalia msg plugins source add dev path ~/Documents/code/noctalia-kaffeehaus
@@ -155,11 +169,13 @@ noctalia plugins lint fiaker
 noctalia plugins lint haeubchen
 noctalia plugins lint goschen
 noctalia plugins lint kerzenlicht
+noctalia plugins lint stammgast
 ./tests/vitrine/run.sh
 ./tests/fiaker/run.sh
 ./tests/haeubchen/run.sh
 ./tests/goschen/run.sh
 ./tests/kerzenlicht/run.sh
+./tests/stammgast/run.sh
 ```
 
 ## License
