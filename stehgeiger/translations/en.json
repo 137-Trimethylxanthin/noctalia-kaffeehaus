@@ -1,0 +1,36 @@
+{
+  "title": "Stehgeiger",
+  "active": "Active",
+  "output": "Output profile",
+  "input": "Input profile",
+  "switched": "{label} is on",
+  "failed": "Easy Effects did not answer; trying again in a minute",
+  "unknown": "No Easy Effects preset called {preset}",
+  "no-profiles": "No output profiles: make a preset in Easy Effects first",
+  "missing": {
+    "title": "Easy Effects is not installed",
+    "subtitle": "Stehgeiger switches Easy Effects presets; install easyeffects first"
+  },
+  "stopped": {
+    "title": "Easy Effects is not running",
+    "subtitle": "Start Easy Effects (easyeffects --service-mode); Stehgeiger never starts it itself"
+  },
+  "unanswered": {
+    "title": "Easy Effects does not answer",
+    "subtitle": "Stehgeiger asks again in a minute"
+  },
+  "empty": {
+    "title": "No presets yet",
+    "subtitle": "Make one in Easy Effects, or check the profiles in Settings → Plugins → Stehgeiger"
+  },
+  "settings": {
+    "output_profiles": {
+      "label": "Output profiles",
+      "description": "Label=preset pairs, separated by commas, in the order the tile cycles through them, e.g. \"Headphones=headphones-eq, Speakers=speakers-flat\". Empty: every output preset, by name"
+    },
+    "input_profiles": {
+      "label": "Input profiles",
+      "description": "Label=preset pairs for the launcher, like the output profiles. Empty: every input preset, by name"
+    }
+  }
+}

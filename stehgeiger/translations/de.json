@@ -1,0 +1,36 @@
+{
+  "title": "Stehgeiger",
+  "active": "Aktiv",
+  "output": "Ausgabeprofil",
+  "input": "Eingabeprofil",
+  "switched": "{label} ist an",
+  "failed": "Easy Effects hat nicht geantwortet; in einer Minute nochmal",
+  "unknown": "Kein Easy-Effects-Preset namens {preset}",
+  "no-profiles": "Keine Ausgabeprofile: zuerst in Easy Effects ein Preset anlegen",
+  "missing": {
+    "title": "Easy Effects ist nicht installiert",
+    "subtitle": "Stehgeiger schaltet Easy-Effects-Presets um; zuerst easyeffects installieren"
+  },
+  "stopped": {
+    "title": "Easy Effects läuft nicht",
+    "subtitle": "Easy Effects starten (easyeffects --service-mode); Stehgeiger startet es nie selbst"
+  },
+  "unanswered": {
+    "title": "Easy Effects antwortet nicht",
+    "subtitle": "Stehgeiger fragt in einer Minute nochmal"
+  },
+  "empty": {
+    "title": "Noch keine Presets",
+    "subtitle": "In Easy Effects eines anlegen, oder die Profile unter Einstellungen → Plugins → Stehgeiger prüfen"
+  },
+  "settings": {
+    "output_profiles": {
+      "label": "Ausgabeprofile",
+      "description": "Name=Preset-Paare, durch Kommas getrennt, in der Reihenfolge, in der die Kachel sie durchschaltet, z. B. \"Kopfhörer=kopfhoerer-eq, Lautsprecher=lautsprecher-flat\". Leer: jedes Ausgabe-Preset, mit seinem Namen"
+    },
+    "input_profiles": {
+      "label": "Eingabeprofile",
+      "description": "Name=Preset-Paare für den Launcher, wie bei den Ausgabeprofilen. Leer: jedes Eingabe-Preset, mit seinem Namen"
+    }
+  }
+}

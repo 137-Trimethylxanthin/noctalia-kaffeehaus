@@ -1,0 +1,52 @@
+# Stehgeiger — the standing violinist in a Viennese café, who walks from
+# table to table and plays what the guests request. This one plays your
+# Easy Effects presets: one click on the tile and the next profile is on.
+#
+#   control   [[service]]            the only one that talks to Easy Effects:
+#                                    asks what is loaded, loads presets
+#                                    (lib/core.luau decides)
+#   provider  [[launcher_provider]]  /eq: every output and input profile
+#   cycle     [[shortcut]]           control-center tile: the next output profile
+
+id           = "137-trimethylxanthin/stehgeiger"
+name         = "Stehgeiger"
+version      = "0.1.0"
+plugin_api   = 24   # argv form of runAsync; also brings module-require and service-lifecycle
+author       = "137-trimethylxanthin"
+license      = "MIT"
+icon         = "adjustments-horizontal"
+deprecated   = false
+description  = "Switch Easy Effects presets from a control-center tile, the launcher or one key: headphones, speakers, a microphone chain. Never starts Easy Effects, never bypasses it."
+tags         = ["launcher", "shortcut", "service", "audio"]
+# easyeffects is checked at runtime; without it the plugin stays idle and says so.
+dependencies = []
+
+[[setting]]
+key             = "output_profiles"
+type            = "string"
+label_key       = "settings.output_profiles.label"
+description_key = "settings.output_profiles.description"
+default         = ""
+
+[[setting]]
+key             = "input_profiles"
+type            = "string"
+label_key       = "settings.input_profiles.label"
+description_key = "settings.input_profiles.description"
+default         = ""
+
+[[service]]
+id    = "control"
+entry = "control.luau"
+
+[[launcher_provider]]
+id                       = "provider"
+entry                    = "provider.luau"
+prefix                   = "eq"
+glyph                    = "adjustments-horizontal"
+include_in_global_search = false
+debounce_ms              = 0
+
+[[shortcut]]
+id    = "cycle"
+entry = "shortcut.luau"
