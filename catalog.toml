@@ -93,3 +93,17 @@ description = "Close the lid and keep coding: while Claude Code, Codex or anothe
 deprecated = false
 plugin_api = 24
 tags = ["shortcut", "service", "widget", "desktop", "power", "ai"]
+
+[[plugin]]
+id = "137-trimethylxanthin/stehgeiger"
+name = "Stehgeiger"
+version = "0.1.0"
+updated_at = 1794159981
+added_at = 1794159981
+author = "137-trimethylxanthin"
+license = "MIT"
+icon = "adjustments-horizontal"
+description = "Switch Easy Effects presets from a control-center tile, the launcher or one key: headphones, speakers, a microphone chain. Never starts Easy Effects, never bypasses it."
+deprecated = false
+plugin_api = 24
+tags = ["launcher", "shortcut", "service", "audio"]

@@ -8,13 +8,16 @@ window or stream, a **Do Not Disturb** that actually keeps Discord quiet, and a
 **cursor light** that flashes on your cursor when a message comes in, dims
 everything else while you shake the mouse, or glows for as long as you like, and
 a **lid keeper** that lets your AI agent go on coding with the laptop shut, and
-shows in the bar what it is doing.
+shows in the bar what it is doing, and an **Easy Effects preset switcher** for
+headphones, speakers and microphones.
 
 | [Vitrine](vitrine/README.md) | [Fiaker](fiaker/README.md) | [Häubchen](haeubchen/README.md) |
 | --- | --- | --- |
 | [![Vitrine: the four display layouts, extend active](vitrine/thumbnail.webp)](vitrine/README.md) | [![Fiaker: month grid and day timeline](fiaker/thumbnail.webp)](fiaker/README.md) | [![Häubchen: a stream in a picture-in-picture corner player](haeubchen/thumbnail.webp)](haeubchen/README.md) |
 | [**Goschen**](goschen/README.md) | [**Kerzenlicht**](kerzenlicht/README.md) | [**Stammgast**](stammgast/README.md) |
 | [![Goschen: Do Not Disturb mutes a chat ping while a call and music keep playing](goschen/thumbnail.webp)](goschen/README.md) | [![Kerzenlicht: a soft white glow around the mouse cursor](kerzenlicht/thumbnail.webp)](kerzenlicht/README.md) | [![Stammgast: with the lid closed, Claude Code keeps coding while the screen is locked and off](stammgast/thumbnail.webp)](stammgast/README.md) |
+| [**Stehgeiger**](stehgeiger/README.md) | | |
+| [![Stehgeiger: a control-center tile that steps through Easy Effects output profiles](stehgeiger/thumbnail.webp)](stehgeiger/README.md) | | |
 
 | Plugin | | What it does |
 | --- | --- | --- |
@@ -24,6 +27,7 @@ shows in the bar what it is doing.
 | **[Goschen](goschen/README.md)** | `0.1.1` | Do Not Disturb that really means it: while it is on, the pings Discord, Telegram and friends play themselves are muted too, and the call you are in and your music keep playing. PipeWire. |
 | **[Kerzenlicht](kerzenlicht/README.md)** | `0.2.0` | Find your cursor: a message or a key lights it for a moment, shaking the mouse dims everything else, and a soft white glow can follow it for screen shares and talks. Click-through, every monitor. Any compositor with cursor sessions. |
 | **[Stammgast](stammgast/README.md)** | `0.1.0` | Close the lid and keep coding: while Claude Code, Codex or another AI agent runs, closing the lid does not suspend the laptop; it locks and turns off the screen instead, and lets go when you quit the agent or the battery runs low. A bar icon (with Claude's mascot) and a desktop or lock-screen card show what each agent is doing, with usage limits. systemd-logind. |
+| **[Stehgeiger](stehgeiger/README.md)** | `0.1.0` | Switch Easy Effects presets from a control-center tile, the launcher or one key: headphones, speakers, a microphone chain. It never starts Easy Effects and never bypasses it, so a switch never gets louder. Easy Effects 8. |
 
 ## Install
 
@@ -42,6 +46,7 @@ noctalia msg plugins enable 137-trimethylxanthin/haeubchen
 noctalia msg plugins enable 137-trimethylxanthin/goschen
 noctalia msg plugins enable 137-trimethylxanthin/kerzenlicht
 noctalia msg plugins enable 137-trimethylxanthin/stammgast
+noctalia msg plugins enable 137-trimethylxanthin/stehgeiger
 ```
 
 `source add` clones the repo into Noctalia's plugin cache; `enable` exports a
@@ -71,6 +76,7 @@ each compositor lets a plugin do its job:
 | **Goschen** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | **Kerzenlicht** | ✅ | ☑️³ | ☑️⁴ | ☑️⁴ | ☑️⁴ | ☑️⁴ | ☑️⁴ | ☑️⁴ | ☑️⁴ |
 | **Stammgast** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| **Stehgeiger** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 
 ✅ works (tested on Hyprland 0.56, or needs nothing from the compositor) ·
 ☑️ written against that compositor's IPC or protocol, not tested there yet ·
@@ -91,9 +97,11 @@ a live Noctalia session.
    a software cursor (`WLR_NO_HARDWARE_CURSORS=1`, nested sessions, some NVIDIA
    setups, a recording that paints the cursor in) the light goes out there.
 
-Fiaker uses nothing but Noctalia's own widgets, Goschen talks to PipeWire and
-Stammgast to systemd-logind, not to the compositor, which is why they work
-everywhere.
+Fiaker uses nothing but Noctalia's own widgets, Goschen talks to PipeWire,
+Stammgast to systemd-logind and Stehgeiger to Easy Effects, not to the
+compositor, which is why they work everywhere. Stehgeiger is new: its logic is
+covered by its test suite, and its service, tile and launcher have been run in
+a live Noctalia 5.4 session with Easy Effects 8.3.2 on Hyprland.
 
 ## Before you rely on them
 
@@ -123,6 +131,13 @@ everywhere), `systemd-inhibit`, `busctl`, `ps`, `awk` and `pkill`. An agent
 counts while it is open, busy or not, so quit it when you want the laptop to
 sleep; a battery floor is the safety net. A closed laptop that keeps working
 gets warm.
+
+**Stehgeiger** needs [Easy Effects](https://github.com/wwmm/easyeffects) 8,
+running as a service (`easyeffects --service-mode` or its own *start at login*
+setting), and presets made in it; most effects also need `lsp-plugins-lv2` and
+`calf`. It never starts Easy Effects. With Easy Effects stopped, your audio has
+no equalizer cut and is louder, so turn the volume down before starting it; see
+its README on hearing safety.
 
 Each plugin's own README has the full documentation — every widget, setting and
 caveat.
@@ -170,12 +185,14 @@ noctalia plugins lint haeubchen
 noctalia plugins lint goschen
 noctalia plugins lint kerzenlicht
 noctalia plugins lint stammgast
+noctalia plugins lint stehgeiger
 ./tests/vitrine/run.sh
 ./tests/fiaker/run.sh
 ./tests/haeubchen/run.sh
 ./tests/goschen/run.sh
 ./tests/kerzenlicht/run.sh
 ./tests/stammgast/run.sh
+./tests/stehgeiger/run.sh
 ```
 
 ## License
